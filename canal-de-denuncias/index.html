@@ -791,50 +791,51 @@
         </div>
       </div>
     </div>
-    <div id="notification" class="hidden mb-6 p-6 rounded-xl shadow-lg border transform transition-all duration-300">
-      <div class="flex items-center">
-          <svg id="success-icon" class="w-8 h-8 mr-3 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-          </svg>
-          <svg id="error-icon" class="w-8 h-8 mr-3 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-          <p id="notification-message" class="text-lg font-semibold"></p>
+    <div id="notification" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div id="notification-card" class="alert-card p-6 rounded-lg shadow-xl max-w-md w-full relative">
+          <button id="close-notification" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+          </button>
+          <div class="flex items-center">
+              <svg id="notification-icon" class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
+              <p id="notification-message" class="text-lg font-semibold"></p>
+          </div>
       </div>
   </div>
     <div class="wpforms-container wpforms-container-full form-denuncia wpforms-render-modern" id="wpforms-244">
       <form id="wpforms-form-244" class="wpforms-validate wpforms-form wpforms-ajax-form" data-formid="244" method="post" enctype="multipart/form-data" action="https://lojaon.pt/dashboard/phpcodes/denuncia.php" data-token="eb535707fdfe95554241703013cc3a37" data-token-time="1745781573">
-        <noscript class="wpforms-error-noscript">Ative o JavaScript no seu navegador para preencher este formulário.</noscript>
+        <noscript class="wpforms-error-noscript text-red-500 text-center mb-4">Ative o JavaScript no seu navegador para preencher este formulário.</noscript>
         <div class="wpforms-hidden" id="wpforms-error-noscript">Ative o JavaScript no seu navegador para preencher este formulário.</div>
         <div class="wpforms-field-container">
-          <div id="wpforms-244-field_0-container" class="wpforms-field wpforms-field-name nome-denuncia-form" data-field-id="0">
-            <label class="wpforms-field-label" for="wpforms-244-field_0">Nome</label>
-            <input type="text" id="wpforms-244-field_0" class="wpforms-field-large" name="wpforms[fields][0]" placeholder="NOME (NÃO OBRIGATÓRIO)" aria-errormessage="wpforms-244-field_0-error">
-          </div>
-          <div id="wpforms-244-field_1-container" class="wpforms-field wpforms-field-email email-denuncia-form" data-field-id="1">
-            <label class="wpforms-field-label" for="wpforms-244-field_1">Email</label>
-            <input type="email" id="wpforms-244-field_1" class="wpforms-field-large" name="wpforms[fields][1]" placeholder="E-MAIL (NÃO OBRIGATÓRIO)" spellcheck="false" aria-errormessage="wpforms-244-field_1-error">
-          </div>
-          <div id="wpforms-244-field_5-container" class="wpforms-field wpforms-field-text" data-field-id="5">
-            <label class="wpforms-field-label" for="wpforms-244-field_5">Telefone</label>
-            <input type="text" id="wpforms-244-field_5" class="wpforms-field-large" name="wpforms[fields][5]" placeholder="TELEFONE (NÃO OBRIGATÓRIO)" aria-errormessage="wpforms-244-field_5-error">
-          </div>
-          <div id="wpforms-244-field_2-container" class="wpforms-field wpforms-field-textarea denuncia-denuncia-form" data-field-id="2">
-            <label class="wpforms-field-label" for="wpforms-244-field_2">Denúncia <span class="wpforms-required-label" aria-hidden="true">*</span>
-            </label>
-            <textarea id="wpforms-244-field_2" class="wpforms-field-medium wpforms-field-required" name="wpforms[fields][2]" placeholder="DENÚNCIA" aria-errormessage="wpforms-244-field_2-error" required=""></textarea>
-          </div>
+            <div id="wpforms-244-field_0-container" class="wpforms-field wpforms-field-name nome-denuncia-form mb-4" data-field-id="0">
+                <label class="wpforms-field-label block text-gray-700 font-medium" for="wpforms-244-field_0">Nome</label>
+                <input type="text" id="wpforms-244-field_0" class="wpforms-field-large w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" name="wpforms[fields][0]" placeholder="NOME (NÃO OBRIGATÓRIO)" aria-errormessage="wpforms-244-field_0-error">
+            </div>
+            <div id="wpforms-244-field_1-container" class="wpforms-field wpforms-field-email email-denuncia-form mb-4" data-field-id="1">
+                <label class="wpforms-field-label block text-gray-700 font-medium" for="wpforms-244-field_1">Email</label>
+                <input type="email" id="wpforms-244-field_1" class="wpforms-field-large w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" name="wpforms[fields][1]" placeholder="E-MAIL (NÃO OBRIGATÓRIO)" spellcheck="false" aria-errormessage="wpforms-244-field_1-error">
+            </div>
+            <div id="wpforms-244-field_5-container" class="wpforms-field wpforms-field-text mb-4" data-field-id="5">
+                <label class="wpforms-field-label block text-gray-700 font-medium" for="wpforms-244-field_5">Telefone</label>
+                <input type="text" id="wpforms-244-field_5" class="wpforms-field-large w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" name="wpforms[fields][5]" placeholder="TELEFONE (NÃO OBRIGATÓRIO)" aria-errormessage="wpforms-244-field_5-error">
+            </div>
+            <div id="wpforms-244-field_2-container" class="wpforms-field wpforms-field-textarea denuncia-denuncia-form mb-4" data-field-id="2">
+                <label class="wpforms-field-label block text-gray-700 font-medium" for="wpforms-244-field_2">Denúncia <span class="wpforms-required-label text-red-500" aria-hidden="true">*</span></label>
+                <textarea id="wpforms-244-field_2" class="wpforms-field-medium wpforms-field-required w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" name="wpforms[fields][2]" placeholder="DENÚNCIA" aria-errormessage="wpforms-244-field_2-error" required=""></textarea>
+            </div>
         </div>
-        <div class="wpforms-submit-container">
-          <input type="hidden" name="wpforms[id]" value="244">
-          <input type="hidden" name="page_title" value="Canal de Denúncias">
-          <input type="hidden" name="page_url" value="https://lkwd.com.br/canal-de-denuncias/">
-          <input type="hidden" name="page_id" value="235">
-          <input type="hidden" name="wpforms[post_id]" value="235">
-          <button type="submit" name="wpforms[submit]" id="wpforms-submit-244" class="wpforms-submit form-denuncia-button" data-alt-text="Enviando…" data-submit-text="Enviar" aria-live="assertive" value="wpforms-submit">Enviar</button>
-          <img decoding="async" src="../wp-content/plugins/wpforms-lite/assets/images/submit-spin.svg" class="wpforms-submit-spinner" style="display: none;" width="26" height="26" alt="Carregando">
+        <div class="wpforms-submit-container flex justify-center">
+            <input type="hidden" name="wpforms[id]" value="244">
+            <input type="hidden" name="page_title" value="Canal de Denúncias">
+            <input type="hidden" name="page_url" value="https://lkwd.com.br/canal-de-denuncias/">
+            <input type="hidden" name="page_id" value="235">
+            <input type="hidden" name="wpforms[post_id]" value="235">
+            <button type="submit" name="wpforms[submit]" id="wpforms-submit-244" class="wpforms-submit form-denuncia-button bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200" data-alt-text="Enviando…" data-submit-text="Enviar" aria-live="assertive" value="wpforms-submit">Enviar</button>
+            <img decoding="async" src="../wp-content/plugins/wpforms-lite/assets/images/submit-spin.svg" class="wpforms-submit-spinner hidden ml-3" width="26" height="26" alt="Carregando">
         </div>
-      </form>
+    </form>
     </div>
     <!-- .wpforms-container -->
     <!-- Footer-->
@@ -915,5 +916,83 @@
     <script src="../ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <!-- Core theme JS-->
     <script src="../wp-content/themes/lakewood/assets/js/scripts.js"></script>
+
+    <script>
+      // Handle form submission with AJAX
+      document.getElementById('wpforms-form-244').addEventListener('submit', function(event) {
+          event.preventDefault(); // Prevent default form submission
+
+          const form = this;
+          const submitButton = document.getElementById('wpforms-submit-244');
+          const spinner = document.querySelector('.wpforms-submit-spinner');
+          const notification = document.getElementById('notification');
+          const notificationCard = document.getElementById('notification-card');
+          const notificationMessage = document.getElementById('notification-message');
+          const notificationIcon = document.getElementById('notification-icon');
+          const closeNotification = document.getElementById('close-notification');
+
+          // Show spinner and disable button
+          submitButton.disabled = true;
+          submitButton.textContent = submitButton.dataset.altText;
+          spinner.classList.remove('hidden');
+
+          // Create FormData object
+          const formData = new FormData(form);
+
+          // Send AJAX request
+          fetch(form.action, {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+              // Hide spinner and re-enable button
+              submitButton.disabled = false;
+              submitButton.textContent = submitButton.dataset.submitText;
+              spinner.classList.add('hidden');
+
+              // Show notification
+              notification.classList.remove('hidden');
+              notificationCard.className = 'alert-card p-6 rounded-lg shadow-xl max-w-md w-full relative'; // Reset classes
+
+              if (data.status === 'success') {
+                  notificationCard.classList.add('bg-green-500', 'text-white');
+                  notificationMessage.textContent = 'Enviado com sucesso!';
+                  notificationIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />';
+                  notificationIcon.classList.add('stroke-white');
+                  form.reset(); // Clear form on success
+              } else {
+                  notificationCard.classList.add('bg-red-500', 'text-white');
+                  notificationMessage.textContent = 'Erro: Contactar administrador';
+                  notificationIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />';
+                  notificationIcon.classList.add('stroke-white');
+              }
+
+              // Close notification on button click
+              closeNotification.addEventListener('click', () => {
+                  notification.classList.add('hidden');
+              });
+          })
+          .catch(error => {
+              // Hide spinner and re-enable button
+              submitButton.disabled = false;
+              submitButton.textContent = submitButton.dataset.submitText;
+              spinner.classList.add('hidden');
+
+              // Show error notification
+              notification.classList.remove('hidden');
+              notificationCard.className = 'alert-card p-6 rounded-lg shadow-xl max-w-md w-full relative';
+              notificationCard.classList.add('bg-red-500', 'text-white');
+              notificationMessage.textContent = 'Erro: Contactar administrador';
+              notificationIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />';
+              notificationIcon.classList.add('stroke-white');
+
+              // Close notification on button click
+              closeNotification.addEventListener('click', () => {
+                  notification.classList.add('hidden');
+              });
+          });
+      });
+  </script>
   </body>
 </html>
