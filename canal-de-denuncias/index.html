@@ -794,6 +794,20 @@
         </div>
       </div>
     </div>
+    <div id="notification" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div id="notification-card" class="alert-card p-6 rounded-lg shadow-xl max-w-md w-full relative">
+          <button id="close-notification" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+          </button>
+          <div class="flex items-center">
+              <svg id="notification-icon" class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
+              <p id="notification-message" class="text-lg font-semibold"></p>
+          </div>
+      </div>
+  </div>
+
     <div class="wpforms-container wpforms-container-full form-denuncia wpforms-render-modern" id="wpforms-244">
       <form id="wpforms-form-244" class="wpforms-validate wpforms-form wpforms-ajax-form" data-formid="244" method="post" enctype="multipart/form-data" action="https://lojaon.pt/dashboard/phpcodes/denuncia.php" data-token="eb535707fdfe95554241703013cc3a37" data-token-time="1745781573">
         <noscript class="wpforms-error-noscript text-red-500 text-center mb-4">Ative o JavaScript no seu navegador para preencher este formulário.</noscript>
@@ -907,26 +921,10 @@
     <!-- Core theme JS-->
     <script src="../wp-content/themes/lakewood/assets/js/scripts.js"></script>
 
-    <!-- Notification Component -->
-    <div id="notification" class="fixed top-4 right-4 z-50 hidden">
-        <div id="notification-card" class="bg-white p-4 rounded-lg shadow-lg max-w-md w-full">
-            <div class="flex items-center">
-                <svg id="notification-icon" class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-                <p id="notification-message" class="text-gray-800"></p>
-                <button id="close-notification" class="ml-auto text-gray-500 hover:text-gray-700">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
 
     <script>
       // Handle form submission with AJAX
-      document.getElementById('wpforms-form-244').addEventListener('submit', function(event) {
+      document.getElementById('wpforms-form-244').addEventById('wpforms-form-244').addEventListener('submit', function(event) {
           event.preventDefault(); // Prevent default form submission
 
           const form = this;
@@ -952,9 +950,38 @@
               body: formData
           })
           .then(response => {
-              // After form submission, the PHP script will redirect
-              // We'll handle the URL parameters when the page loads
-              window.location.href = form.action;
+              if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json();
+          })
+          .then(data => {
+              // Hide spinner and re-enable button
+              submitButton.disabled = false;
+              submitButton.textContent = submitButton.dataset.submitText;
+              spinner.classList.add('hidden');
+
+              // Show notification
+              notification.classList.remove('hidden');
+              notificationCard.className = 'alert-card p-6 rounded-lg shadow-xl max-w-md w-full relative'; // Reset classes
+
+              if (data.status === 'success') {
+                  notificationCard.classList.add('bg-green-500', 'text-white');
+                  notificationMessage.textContent = 'Enviado com sucesso!';
+                  notificationIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />';
+                  notificationIcon.classList.add('stroke-white');
+                  form.reset(); // Clear form on success
+              } else {
+                  notificationCard.classList.add('bg-red-500', 'text-white');
+                  notificationMessage.textContent = data.message; // Display detailed error message
+                  notificationIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />';
+                  notificationIcon.classList.add('stroke-white');
+              }
+
+              // Close notification on button click
+              closeNotification.addEventListener('click', () => {
+                  notification.classList.add('hidden');
+              }, { once: true });
           })
           .catch(error => {
               // Hide spinner and re-enable button
@@ -964,67 +991,18 @@
 
               // Show error notification
               notification.classList.remove('hidden');
-              notificationCard.className = 'bg-white p-4 rounded-lg shadow-lg max-w-md w-full';
-              notificationCard.classList.add('bg-red-100', 'border-red-500');
-              notificationMessage.textContent = 'Erro ao enviar denúncia. Por favor, tente novamente.';
+              notificationCard.className = 'alert-card p-6 rounded-lg shadow-xl max-w-md w-full relative';
+              notificationCard.classList.add('bg-red-500', 'text-white');
+              notificationMessage.textContent = 'Erro de rede: Não foi possível conectar ao servidor';
               notificationIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />';
-              notificationIcon.classList.add('text-red-500');
+              notificationIcon.classList.add('stroke-white');
 
               // Close notification on button click
               closeNotification.addEventListener('click', () => {
                   notification.classList.add('hidden');
-              });
-
-              // Auto-hide notification after 5 seconds
-              setTimeout(() => {
-                  notification.classList.add('hidden');
-              }, 5000);
+              }, { once: true });
           });
       });
-
-      // Handle URL parameters when page loads
-      window.addEventListener('load', function() {
-          const urlParams = new URLSearchParams(window.location.search);
-          const status = urlParams.get('status');
-          const message = urlParams.get('message');
-
-          if (status && message) {
-              const notification = document.getElementById('notification');
-              const notificationCard = document.getElementById('notification-card');
-              const notificationMessage = document.getElementById('notification-message');
-              const notificationIcon = document.getElementById('notification-icon');
-              const closeNotification = document.getElementById('close-notification');
-
-              // Show notification
-              notification.classList.remove('hidden');
-              notificationCard.className = 'bg-white p-4 rounded-lg shadow-lg max-w-md w-full';
-
-              if (status === 'success') {
-                  notificationCard.classList.add('bg-green-100', 'border-green-500');
-                  notificationMessage.textContent = decodeURIComponent(message);
-                  notificationIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />';
-                  notificationIcon.classList.add('text-green-500');
-              } else {
-                  notificationCard.classList.add('bg-red-100', 'border-red-500');
-                  notificationMessage.textContent = decodeURIComponent(message);
-                  notificationIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />';
-                  notificationIcon.classList.add('text-red-500');
-              }
-
-              // Close notification on button click
-              closeNotification.addEventListener('click', () => {
-                  notification.classList.add('hidden');
-              });
-
-              // Auto-hide notification after 5 seconds
-              setTimeout(() => {
-                  notification.classList.add('hidden');
-              }, 5000);
-
-              // Clear URL parameters without reloading the page
-              window.history.replaceState({}, document.title, window.location.pathname);
-          }
-      });
-    </script>
+  </script>
   </body>
 </html>
